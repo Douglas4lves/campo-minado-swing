@@ -2,7 +2,7 @@ package br.com.cod3r.cm.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
+
 
 
 
@@ -17,8 +17,7 @@ public class Campo {
     
     private List<Campo> vizinhos = new ArrayList<>();
     private List<CampoObservador> observadores = new ArrayList<>();
-    private List<BiConsumer<Campo, CampoEvento>>
-    	observadores2 = new ArrayList<>();
+   
     
     Campo(int linha, int coluna){
         this.linha = linha;
@@ -55,7 +54,7 @@ public class Campo {
         }
     }
     
-    void alternarMarcacao(){
+    public void alternarMarcacao(){
         if(!aberto){
             marcado = !marcado;
             if(marcado) {
@@ -66,10 +65,8 @@ public class Campo {
         }
     }
     
-    boolean abrir(){
-        if(!aberto && !marcado){
-            
-            
+    public boolean abrir(){
+        if(!aberto && !marcado){          
             if(minado){
                 notificarObservadores(CampoEvento.EXPLODIR);
                 return true;
@@ -87,7 +84,7 @@ public class Campo {
         
     }
     
-    boolean vizinhancaSegura(){
+    public boolean vizinhancaSegura(){
         return vizinhos.stream().noneMatch(v -> v.minado);//se nenhum vizinho tiver mina, a vizinhança é segura
     }
     
@@ -134,8 +131,8 @@ public class Campo {
     	return desvendado || protegido;
     }
     
-    long minasNaVizinhanca() {
-    	return vizinhos.stream().filter(v-> v.minado).count();    	
+    public int minasNaVizinhanca() {
+    	return (int) vizinhos.stream().filter(v-> v.minado).count();    	
     }
     
     void reiniciar() {
